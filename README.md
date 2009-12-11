@@ -19,6 +19,8 @@ And register the implicit animation in javascript:
 
 This code doesn't require HTML to be present, so you can execute it whenever you want.
 
+The options available are all the options available to Fx.Morph, plus the 'properties' option which allows you to specify the CSS properties you want to animate.
+
 Visual state changes are checked and animated on every event. This code will cause the background color of every .box to animate whenever it is clicked:
 
 	#JS
@@ -26,4 +28,3 @@ Visual state changes are checked and animated on every event. This code will cau
     this.toggleClass('alternate');
   });
 
-Please see the documentation for more available options.
