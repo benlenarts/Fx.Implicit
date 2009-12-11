@@ -9,10 +9,11 @@ authors:
 
 requires:
 - Fx.Implicit
-- core:1.2.4: [Element.Event]
+- core:1.2.4: Element.Event
 
 provides: [Fx.Implicit.Integration]
----
+
+...
 */
 
 (function() {
