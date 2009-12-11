@@ -1,10 +1,20 @@
 /*
-Script: Fx.Implicit.js
-  Provides the implicit animation engine 
-   
-License:
-  MIT-style license.
+---
+description: Fx.Implicit class
+
+license: MIT-style
+
+authors:
+- Ben Lenarts
+
+requires:
+- core:1.2.4: [Fx.Morph]
+
+provides: [Element.Properties.opacity.get, Fx.Implicit]
+---
+
 */
+
 
 // - display none bij het meten van stijl uitzetten
 

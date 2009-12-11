@@ -1,9 +1,18 @@
 /*
-Script: Fx.Implicit.Integration.js
-  Ties Fx.Implicit to DOM events and class changes.
-   
-License:
-  MIT-style license.
+---
+description: Ties Fx.Implicit to DOM events and className changes.
+
+license: MIT-style
+
+authors:
+- Ben Lenarts
+
+requires:
+- Fx.Implicit
+- core:1.2.4: [Element.Event]
+
+provides: [Fx.Implicit integration]
+
 */
 
 (function() {
@@ -45,6 +54,8 @@ Function.prototype.create = function(options){
 }
 
 // Request callback listeners
-Request.implement('onStateChange', Fx.Implicit.makeDomChanger(Request.prototype.onStateChange));
+if (window.Request) {
+  Request.implement('onStateChange', Fx.Implicit.makeDomChanger(Request.prototype.onStateChange));
+}
 
 })();
