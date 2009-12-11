@@ -129,6 +129,10 @@ Fx.Implicit.extend({
   domChanged: false,
   changedElements: {},
 
+  add: function(selector, options) {
+    return new Fx.Implicit(selector, options);
+  },
+
   onDomChange: function(element) {
     if (this.isListening && !this.changedElements[element.uid]) {
       this.changedElements[element.uid] = true;
