@@ -1,7 +1,7 @@
 Fx.Implicit
 ===========
 
-Register implicit animations similar to Webkit's CSS-transitions. 
+Cross-browser implicit animations analogous to WebKit's CSS-transitions. 
 
 How to use
 ----------
