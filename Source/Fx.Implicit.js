@@ -14,6 +14,9 @@ requires:
 
 provides: [Element.Properties.opacity.get, Fx.Implicit]
 
+inspiration:
+  Spiffy by Lon Boonen (closed source, developed at Q42 in the Netherlands)
+
 ...
 */
 
