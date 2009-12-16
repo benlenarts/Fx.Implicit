@@ -12,7 +12,8 @@ requires:
 - core/1.2.4: 
   - Element.Event
 
-provides: [Fx.Implicit.Integration]
+provides: 
+- Fx.Implicit.Integration
 
 credits:
   Q42 (http://q42.nl), for allowing me to release this code as open-source
