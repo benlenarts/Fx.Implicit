@@ -8,7 +8,7 @@ authors:
 - Ben Lenarts
 
 requires:
-- /Fx.Implicit
+- :Fx.Implicit
 - core/1.2.4: 
   - Element.Event
 
