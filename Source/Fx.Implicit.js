@@ -17,6 +17,9 @@ provides: [Element.Properties.opacity.get, Fx.Implicit]
 inspiration:
   Spiffy by Lon Boonen (closed source, developed at Q42 in the Netherlands)
 
+credits:
+  Q42 (http://q42.nl), for allowing me to release this code as open-source
+
 ...
 */
 

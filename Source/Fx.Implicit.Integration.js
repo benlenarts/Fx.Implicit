@@ -15,6 +15,9 @@ requires:
 
 provides: [Fx.Implicit.Integration]
 
+credits:
+  Q42 (http://q42.nl), for allowing me to release this code as open-source
+
 ...
 */
 
