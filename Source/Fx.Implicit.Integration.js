@@ -8,10 +8,9 @@ authors:
 - Ben Lenarts
 
 requires:
-  core/1.2.4: '*'
-# actually:
-# - Fx.Implicit
-# - core/1.2.4: Element.Event
+- /Fx.Implicit
+- core/1.2.4: 
+  - Element.Event
 
 provides: [Fx.Implicit.Integration]
 
