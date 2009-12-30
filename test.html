@@ -52,6 +52,29 @@
     left: 55px;
     top: 60px;
   }
+  /* hierarchy */
+  .demo .stage .cage {
+    position: relative;
+    left: 10px;
+    top: 10px;
+    width: 278px;
+    height: 178px;
+    border: 1px solid #600;
+    color: gray;
+  }
+  .demo .stage .cage.toggled {
+    border-color: red;
+  }
+  .demo .stage .critter {
+    position: absolute;
+    padding: 5px;
+    background: #600;
+    color: white;
+  }
+  #critter-1 { left: 50px; top: 20px; }
+  .cage.toggled #critter-1 { left: 150px; top: 5px; }
+  #critter-2 { left: 120px; top: 120px; }
+  .cage.toggled #critter-2 { left: 10px; top: 75px; }
   
   
 </style>
@@ -117,9 +140,35 @@ Fx.Implicit.add('.wobbler', {
     </div>
   </div>
   <h2>Hierarchy</h2>
-  <h2>More Options</h2>
-  <h2>Best Practices</h2>
+  <div class="demo">
+    <script>
+// Changes in the DOM can trigger style 
+// changes for inner elements. In this 
+// example: critters move about when 
+// their cage gets seriously toggled.
+
+Fx.Implicit.add('.critter', {
+  properties: ['left', 'top'],
+  duration: 'long'
+});
+
+// Remember that Fx.Implicit inherits
+// all options from Fx
+
+    </script>
+    <pre><code></code></pre>
+    <div class="stage">
+      <div class="cage togglable">
+        cage
+        <div id="critter-1" class="critter">critter</div>
+        <div id="critter-2" class="critter">critter</div>
+      </div>
+    </div>
+  </div>
   <h2>Manual triggering</h2>
   <h2>Download</h2>
+  <p>
+    <a href="http://mootools.net/forge/p/fx_implicit">Download Fx.Implicit from the Forge</a>
+  </p>
 </body>
 </html>
