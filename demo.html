@@ -92,10 +92,6 @@
 <script src="master/Source/Fx.Implicit.js"></script>
 <script src="master/Source/Fx.Implicit.Integration.js"></script>
 <script>
-  Fx.Implicit.add('.box', {
-    properties: ['background-color']
-  });
-
 document.addEvent('domready', function() {
   $$('.togglable').addEvent('click', function() {
     this.toggleClass('toggled');
