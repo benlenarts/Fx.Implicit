@@ -75,7 +75,17 @@
   .cage.toggled #critter-1 { left: 150px; top: 5px; }
   #critter-2 { left: 120px; top: 120px; }
   .cage.toggled #critter-2 { left: 10px; top: 75px; }
-  
+
+  /* manual */
+  .demo .stage .abhorer {
+    position: relative;
+    left: 10px;
+    top: 10px;
+    border: 2px solid black;
+  }
+  .demo .stage input.abhorer[value=abc] {
+    border-color: red;
+  }
   
 </style>
 <script src="core.js"></script>
@@ -101,6 +111,7 @@ document.addEvent('domready', function() {
 
 <body>
   <h1>Fx.Implicit Demo</h1>
+
   <h2>Basic usage</h2>
   <div class="demo">
     <script>
@@ -119,6 +130,7 @@ Fx.Implicit.add('.boo', {
       <div class="boo togglable">BOO!</div>
     </div>
   </div>
+
   <h2>Animate Multiple Properties</h2>
   <div class="demo">
     <script>
@@ -139,6 +151,7 @@ Fx.Implicit.add('.wobbler', {
       <div class="wobbler togglable">I am Wobbler</div>
     </div>
   </div>
+
   <h2>Hierarchy</h2>
   <div class="demo">
     <script>
@@ -165,7 +178,7 @@ Fx.Implicit.add('.critter', {
       </div>
     </div>
   </div>
-  <h2>Manual triggering</h2>
+
   <h2>Download</h2>
   <p>
     <a href="http://mootools.net/forge/p/fx_implicit">Download Fx.Implicit from the Forge</a>
