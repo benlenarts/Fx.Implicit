@@ -4,8 +4,56 @@
 <head>
 <title>Fx.Implicit Demo</title>
 <style>
-  .box { background-color: blue; } 
-  .box.alternate { background-color: red; }
+  body { font-family: Helvetica, Arial, sans-serif; }
+  .demo pre code {
+    float: left;
+    margin-right: 10px;
+    border: 1px solid gray;
+    padding: 10px;
+    width: 280px;
+    height: 180px;
+    font-family: Monaco, monospace;
+    font-size: 12px;
+  }
+  .demo .stage {
+    border: 1px solid gray;
+    overflow: hidden;
+    height: 200px; 
+    width: 300px;
+    font-size: 25px;
+  }
+  /* basic */
+  .demo .stage .boo {
+    color: black;
+    background: black;
+    position: relative;
+    left: 75px;
+    top: 70px;
+    padding: 20px;
+    width: 100px;
+    text-align: center;
+  }
+  .demo .stage .boo.toggled {
+    color: red;
+    background: red;
+  }
+  /* multiple */
+  .demo .stage .wobbler {
+    position: relative;
+    left: 75px;
+    top: 40px;
+    width: 100px;
+    padding: 30px 0;
+    border: 5px solid black;
+    text-align: center;
+  }
+  .demo .stage .wobbler.toggled {
+    padding: 10px 20px;
+    left: 55px;
+    top: 60px;
+  }
+  
+  
 </style>
 <script src="core.js"></script>
 <script src="master/Source/Fx.Implicit.js"></script>
@@ -16,14 +64,62 @@
   });
 
 document.addEvent('domready', function() {
-  $$('.box').addEvent('click', function() {
-    this.toggleClass('alternate');
+  $$('.togglable').addEvent('click', function() {
+    this.toggleClass('toggled');
+  });
+  $$('.demo').each(function(demo) {
+    var script = demo.getElement('script').get('html');
+    script = script.replace(/^\s+/, '');
+    demo.getElement('pre>code').set('html', script);
   });
 });
 </script>
 </head>
 
 <body>
-  <div class="box">hahahaha</div>
+  <h1>Fx.Implicit Demo</h1>
+  <h2>Basic usage</h2>
+  <div class="demo">
+    <script>
+// Clicking Boo, the inconspicuous 
+// rectangle on the right, toggles 
+// a class name and consequently
+// its background and color styles.
+// We'll only animate text color.
+
+Fx.Implicit.add('.boo', {
+  properties: ['color']
+});
+    </script>
+    <pre><code></code></pre>
+    <div class="stage">
+      <div class="boo togglable">BOO!</div>
+    </div>
+  </div>
+  <h2>Animate Multiple Properties</h2>
+  <div class="demo">
+    <script>
+// toggling Wobbler also changes
+// multiple styles, but Fx.Implicit 
+// can handle this automatically:
+
+Fx.Implicit.add('.wobbler', {
+  transition: 'bounce:out'
+});
+
+// Specifying properties is 
+// recommended for efficiency though.
+
+    </script>
+    <pre><code></code></pre>
+    <div class="stage">
+      <div class="wobbler togglable">I am Wobbler</div>
+    </div>
+  </div>
+  <h2>Hierarchy</h2>
+  <h2>More Options</h2>
+  <h2>Best Practices</h2>
+  <h2>Manual triggering</h2>
+  <h2>Download</h2>
 </body>
 </html>
