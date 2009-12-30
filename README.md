@@ -3,6 +3,8 @@ Fx.Implicit
 
 Cross-browser implicit animations analogous to WebKit's CSS-transitions. 
 
+![Screenshot](http://benlenarts.github.com/Fx.Implicit/images/screenshot_clock.png)
+
 How to use
 ----------
 
