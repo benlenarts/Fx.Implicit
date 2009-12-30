@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Fx.Implicit Demo</title>
+<style>
+  .box { background-color: blue; } 
+  .box.alternate { background-color: red; }
+</style>
+<script src="core.js"></script>
+<script src="master/Source/Fx.Implicit.js"></script>
+<script src="master/Source/Fx.Implicit.Integration.js"></script>
+<script>
+  Fx.Implicit.add('.box', {
+    properties: ['background-color']
+  });
+
+document.addEvent('domready', function() {
+  $$('.box').addEvent('click', function() {
+    this.toggleClass('alternate');
+  });
+});
+</script>
+</head>
+
+<body>
+  <div class="box">hahahaha</div>
+</body>
+</html>
