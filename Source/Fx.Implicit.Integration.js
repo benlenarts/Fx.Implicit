@@ -23,21 +23,21 @@ credits:
 (function() {
 
 // className triggers
-var extensions = {};
+var overrides = {};
 ['addClass', 'removeClass'].each(function(method) {
-  extensions[method] = Fx.Implicit.makeDomChanger(Element.Prototype[method]);
+  overrides[method] = Fx.Implicit.makeDomChanger(Element.Prototype[method]);
 });
-Element.implement(extensions);
+Element.implement(overrides);
 
 // DOM event listeners
-var extensions = {};
+var overrides = {};
 ['addEvent', 'removeEvent'].each(function(method) {
   var original = Element.Prototype[method];
-  extensions[method] = function(type, fn) {
+  overrides[method] = function(type, fn) {
     original.call(this, type, Fx.Implicit.makeListener(fn));
   }
 });
-Native.implement([Element, Window, Document], extensions);
+Native.implement([Element, Window, Document], overrides);
 
 // delay & periodical listeners; almost a copy of the original Function#create
 Function.prototype.create = function(options){
@@ -60,7 +60,7 @@ Function.prototype.create = function(options){
 
 // Request callback listeners
 if (window.Request) {
-  Request.implement('onStateChange', Fx.Implicit.makeDomChanger(Request.prototype.onStateChange));
+  Request.implement('onStateChange', Fx.Implicit.makeListener(Request.prototype.onStateChange));
 }
 
 })();

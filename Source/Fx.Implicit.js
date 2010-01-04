@@ -163,7 +163,7 @@ Fx.Implicit.extend({
   },
 
   makeListener: function(fn) {
-    // cache listeners to make the resulting functions as comparable as their originals
+    // cache listeners to make them comparable and therefore removable
     if (this.listeners.wrapped.contains(fn)) return fn;
 
     var pos = this.listeners.originals.indexOf(fn);
