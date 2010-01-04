@@ -21,9 +21,8 @@ credits:
 ...
 */
 
-// - display none bij het meten van stijl uitzetten
-
 // the Mootools getter for opacity doesn't cut it. We need computed opacity
+
 Element.Properties.opacity.get = function() {
   if (this.getStyle('visibility') == 'hidden') return '0';
   if (Browser.Engine.trident) {
@@ -37,7 +36,6 @@ Element.Properties.opacity.get = function() {
   }
 };
 
-
 Fx.Implicit = new Class({
 
   Implements: Options,
@@ -48,39 +46,33 @@ Fx.Implicit = new Class({
 
   initialize: function(selector, options) {
     this.selector = selector;
-    this.checkQueue = $H();
+    this.checkQueue = {};
     this.setOptions(options);
-    Fx.Implicit.instances.push(this);
   },
          
-  destroy: function() {
-    Fx.Implicit.instances.erase(this);
-  },
-
   onDomChange: function(element) {
-    var effectedElements = element.getElements(this.selector);
-    if (element.match(this.selector)) effectedElements.push(element);
-    effectedElements.each(this.addToCheckQueue.bind(this));
+    var effected = element.getElements(this.selector);
+    if (element.match(this.selector)) effected.push(element);
+    effected.each(this.addToCheckQueue.bind(this));
   },
 
   addToCheckQueue: function(element) {
-    if (!this.checkQueue.has(element.uid)) {
-      this.checkQueue.set(element.uid, {
+    if (!this.checkQueue[element.uid]) {
+      this.checkQueue[element.uid] = {
         'element': element, 
-        'style': {'before': this.readStyles(element)}
+        'before': this.readStyles(element)
       });
     }
   },
 
   start: function() {
-    if (this.checkQueue.getLength() == 0) return;
     var morphs = [];
     var self = this;
-    this.checkQueue.each(function(item) {
-      item.style.after = self.readStyles(item.element, true);
-      var diff = Fx.Implicit.diffStyles(item.style.before, item.style.after);
-      if ($H(diff).getLength() > 0) {
-        item.element.setStyles(item.style.before);
+    Hash.each(this.checkQueue, function(item) {
+      item.after = self.readStyles(item.element, true);
+      var diff = Fx.Implicit.diffStyles(item.before, item.after);
+      if (Hash.getLength(diff) > 0) {
+        item.element.setStyles(item.before);
         morphs.push({'element': item.element, 'style': diff});
       }
     });
@@ -99,7 +91,7 @@ Fx.Implicit = new Class({
             (/\bcolor$/).test(prop) ? morph.style[prop].map(Fx.Implicit.convertColorNames) : morph.style[prop];
         morph.style = newDiff;
       }
-      // get fx associated with the element
+      // get effect associated with the element
       var fx = morph.element.retrieve('fx:reactive morph', null);
       if (!fx) {
         fx = new Fx.Morph(morph.element, self.options);
@@ -112,7 +104,7 @@ Fx.Implicit = new Class({
       fx.cancel();
       fx.start(morph.style);
     });
-    this.checkQueue = $H();
+    this.checkQueue = new Hash();
   },
 
   readStyles: function(element, withoutInline) {
@@ -135,7 +127,7 @@ Fx.Implicit.extend({
   changedElements: {},
 
   add: function(selector, options) {
-    return new Fx.Implicit(selector, options);
+    this.instances.push(new Fx.Implicit(selector, options));
   },
 
   onDomChange: function(element) {
