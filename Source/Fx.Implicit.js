@@ -68,8 +68,8 @@ Fx.Implicit = new Class({
         if (d[0] == 'none') morph.element.setStyle('display',d[1]);
         delete morph.style.display;
       }
-      // convert color names (for IE)
-      if (Browser.Engine.trident) {
+      // convert color names (for IE & Opera)
+      if (Browser.Engine.trident || Browser.Engine.presto) {
         var newDiff = {};
         for (prop in morph.style)
           newDiff[prop] = 
@@ -212,8 +212,9 @@ Fx.Implicit.Utils = {
   },
 
   convertColors: function(value) {
-    return value.replace(/\b\w+\b/g, function(word) {
-      return Fx.Implicit.Utils.cssColors[word] || word;
+    var colorWords = Browser.Engine.presto ? /"(\w+)"/g : /\b(\w+)\b/g;
+    return value.replace(colorWords, function(match, word) {
+      return Fx.Implicit.Utils.cssColors[word] || match;
     });
   }
 
