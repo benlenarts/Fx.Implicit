@@ -10,7 +10,7 @@ authors:
 requires:
 - core/1.2.4: Fx.Morph
 
-provides: [Element.Properties.opacity.get, Fx.Implicit, Fx.Implicit.Utils]
+provides: [Fx.Implicit, Fx.Implicit.Utils, Element.Properties.opacity.get]
 
 inspiration:
   Spiffy by Lon Boonen (closed source, developed at Q42 in the Netherlands)
@@ -20,21 +20,6 @@ credits:
 
 ...
 */
-
-// the Mootools getter for opacity doesn't cut it. We need computed opacity
-
-Element.Properties.opacity.get = function() {
-  if (this.getStyle('visibility') == 'hidden') return '0';
-  if (Browser.Engine.trident) {
-    var filterValue = this.getStyle('filter');
-    if (!filterValue) return '1';
-    var match = filterValue.match(/alpha\(opacity=(\d{1,3})\)/);
-    if (!match) return '1';
-    return ''+(match[1].toInt() / 100);
-  } else {
-    return this.getComputedStyle('opacity');
-  }
-};
 
 Fx.Implicit = new Class({
 
@@ -186,6 +171,7 @@ Fx.Implicit.extend({
 
 });
 
+
 Fx.Implicit.Utils = {
 
   diffStyles: function(before, after) {
@@ -232,3 +218,20 @@ Fx.Implicit.Utils = {
   }
 
 };
+
+
+// the original opacity getter needs to be overridden to get computed opacity
+
+Element.Properties.opacity.get = function() {
+  if (this.getStyle('visibility') == 'hidden') return '0';
+  if (Browser.Engine.trident) {
+    var filterValue = this.getStyle('filter');
+    if (!filterValue) return '1';
+    var match = filterValue.match(/alpha\(opacity=(\d{1,3})\)/);
+    if (!match) return '1';
+    return (match[1].toInt() / 100).toString();
+  } else {
+    return this.getComputedStyle('opacity');
+  }
+};
+
