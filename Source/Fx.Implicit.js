@@ -8,8 +8,7 @@ authors:
 - Ben Lenarts
 
 requires:
-  core/1.2.4:
-  - Fx.Morph
+- core/1.2.4: Fx.Morph
 
 provides: [Element.Properties.opacity.get, Fx.Implicit]
 
