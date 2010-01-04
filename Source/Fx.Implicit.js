@@ -10,7 +10,7 @@ authors:
 requires:
 - core/1.2.4: Fx.Morph
 
-provides: [Element.Properties.opacity.get, Fx.Implicit]
+provides: [Element.Properties.opacity.get, Fx.Implicit, Fx.Implicit.Utils]
 
 inspiration:
   Spiffy by Lon Boonen (closed source, developed at Q42 in the Netherlands)
@@ -61,7 +61,7 @@ Fx.Implicit = new Class({
       this.checkQueue[element.uid] = {
         'element': element, 
         'before': this.readStyles(element)
-      });
+      };
     }
   },
 
@@ -70,7 +70,7 @@ Fx.Implicit = new Class({
     var self = this;
     Hash.each(this.checkQueue, function(item) {
       item.after = self.readStyles(item.element, true);
-      var diff = Fx.Implicit.diffStyles(item.before, item.after);
+      var diff = Fx.Implicit.Utils.diffStyles(item.before, item.after);
       if (Hash.getLength(diff) > 0) {
         item.element.setStyles(item.before);
         morphs.push({'element': item.element, 'style': diff});
@@ -88,17 +88,17 @@ Fx.Implicit = new Class({
         var newDiff = {};
         for (prop in morph.style)
           newDiff[prop] = 
-            (/\bcolor$/).test(prop) ? morph.style[prop].map(Fx.Implicit.convertColorNames) : morph.style[prop];
+            prop.test(/\bcolor$/) ? morph.style[prop].map(Fx.Implicit.Utils.convertColors) : morph.style[prop];
         morph.style = newDiff;
       }
       // get effect associated with the element
-      var fx = morph.element.retrieve('fx:reactive morph', null);
+      var fx = morph.element.retrieve('fx:implicit morph', null);
       if (!fx) {
         fx = new Fx.Morph(morph.element, self.options);
         fx.addEvent('complete', function() {
-          Fx.Implicit.removeStyles(this.element, self.options.properties);          
+          Fx.Implicit.Utils.removeStyles(this.element, self.options.properties);          
         });
-        morph.element.store('fx:reactive morph', fx);
+        morph.element.store('fx:implicit morph', fx);
       }
       // start the new transition
       fx.cancel();
@@ -182,7 +182,11 @@ Fx.Implicit.extend({
 
   start: function() {
     this.instances.each(function(instance) { instance.start(); });
-  },
+  }
+
+});
+
+Fx.Implicit.Utils = {
 
   diffStyles: function(before, after) {
     var diff = {};
@@ -202,30 +206,29 @@ Fx.Implicit.extend({
     }));
   },
 
-  cssColors: $H({
-    aqua: '#00ffff',
-    black: '#000000',
-    blue: '#0000ff',
-    fuchsia: '#ff00ff',
-    gray: '#808080',
-    green: '#008000',
-    lime: '#00ff00',
-    maroon: '#800000',
-    navy: '#000080',
-    olive: '#808000',
-    purple: '#800080',
-    red: '#ff0000',
-    silver: '#c0c0c0',
-    teal: '#008080',
-    white: '#ffffff',
-    yellow: '#ffff00'
-  }),
+  cssColors: {
+    'aqua': '#00ffff',
+    'black': '#000000',
+    'blue': '#0000ff',
+    'fuchsia': '#ff00ff',
+    'gray': '#808080',
+    'green': '#008000',
+    'lime': '#00ff00',
+    'maroon': '#800000',
+    'navy': '#000080',
+    'olive': '#808000',
+    'purple': '#800080',
+    'red': '#ff0000',
+    'silver': '#c0c0c0',
+    'teal': '#008080',
+    'white': '#ffffff',
+    'yellow': '#ffff00'
+  },
 
-  convertColorNames: function(value) {
+  convertColors: function(value) {
     return value.replace(/\b\w+\b/g, function(word) {
-      return Fx.Implicit.cssColors[word] || word;
+      return Fx.Implicit.Utils.cssColors[word] || word;
     });
   }
 
-});
-
+};
